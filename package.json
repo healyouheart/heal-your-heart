@@ -1,0 +1,8 @@
+{
+  "name": "heal-your-heart",
+  "version": "1.0.0",
+  "description": "Heal Your Heart course with Maris",
+  "engines": {
+    "node": "18"
+  }
+}
