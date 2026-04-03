@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heal Your Heart — Wellness Wakeup Whitefish</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:      #113866;
+  --navy-mid:  #1a4d8a;
+  --navy-lite: #2560a8;
+  --navy-pale: #e8eef7;
+  --rose:      #d35e6f;
+  --rose-dark: #b04050;
+  --white:     #ffffff;
+  --off:       #f4f7fb;
+  --border:    rgba(17,56,102,0.13);
+  --shadow:    rgba(17,56,102,0.09);
+  --soft:      rgba(17,56,102,0.50);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  background:var(--off);
+  color:var(--navy);
+  min-height:100vh;
+  font-size:17px;
+}
+
+.screen { display:none; min-height:100vh; }
+.screen.active { display:flex; flex-direction:column; }
+
+/* ── INTAKE ── */
+#screen-intake { background:var(--white); align-items:center; }
+
+.hero {
+  width:100%; background:var(--navy);
+  padding:56px 40px 48px; text-align:center;
+  position:relative; overflow:hidden;
+}
+.hero::before {
+  content:''; position:absolute; top:-80px; right:-80px;
+  width:260px; height:260px; border-radius:50%;
+  background:radial-gradient(circle,rgba(211,94,111,.22) 0%,transparent 65%);
+}
+.hero::after {
+  content:''; position:absolute; bottom:-50px; left:-50px;
+  width:180px; height:180px; border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.04) 0%,transparent 65%);
+}
+.brand-eye {
+  font-size:13px; letter-spacing:3.5px; text-transform:uppercase;
+  color:var(--rose); margin-bottom:18px;
+}
+.hero-h {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(38px,6vw,58px); font-weight:300;
+  color:var(--white); line-height:1.1; margin-bottom:12px;
+}
+.hero-h em { font-style:italic; color:var(--rose); }
+.hero-s { font-size:16px; color:rgba(255,255,255,.55); letter-spacing:.5px; }
+
+.intake-body {
+  width:100%; max-width:620px;
+  padding:44px 28px 64px; margin:0 auto;
+}
+.fg { margin-bottom:28px; }
+.fl {
+  display:block; font-size:13px; letter-spacing:2.5px;
+  text-transform:uppercase; color:var(--navy-lite);
+  margin-bottom:10px; font-weight:500;
+}
+.fi {
+  width:100%; background:var(--white);
+  border:1.5px solid var(--border); border-radius:8px;
+  padding:16px 18px; font-family:'Jost',sans-serif;
+  font-size:17px; font-weight:300; color:var(--navy);
+  outline:none; transition:border-color .2s;
+}
+.fi:focus { border-color:var(--rose); }
+.fta { resize:vertical; min-height:160px; line-height:1.65; }
+.fh { font-size:14px; color:var(--soft); margin-top:7px; line-height:1.55; }
+
+.wk-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+.wp {
+  background:var(--white); border:1.5px solid var(--border);
+  border-radius:8px; padding:12px 6px 10px;
+  text-align:center; cursor:pointer; transition:all .18s;
+  font-family:'Jost',sans-serif; color:var(--soft);
+  font-size:13px;
+}
+.wp:hover { border-color:var(--rose); color:var(--rose); }
+.wp.sel { background:var(--navy); border-color:var(--navy); color:var(--white); }
+.wp .wn {
+  display:block; font-family:'Cormorant Garamond',serif;
+  font-size:26px; font-weight:300; margin-bottom:3px; line-height:1;
+}
+
+.btn-main {
+  width:100%; background:var(--navy); color:var(--white);
+  border:none; border-radius:8px; padding:18px;
+  font-family:'Jost',sans-serif; font-size:15px;
+  letter-spacing:2px; text-transform:uppercase;
+  cursor:pointer; transition:all .22s; margin-top:10px;
+}
+.btn-main:hover {
+  background:var(--rose); transform:translateY(-1px);
+  box-shadow:0 8px 24px rgba(211,94,111,.28);
+}
+
+/* ── COURSE ── */
+#screen-course { background:var(--off); }
+
+.topbar {
+  background:var(--navy); height:58px;
+  padding:0 20px; display:flex; align-items:center;
+  justify-content:space-between;
+  position:sticky; top:0; z-index:100;
+  box-shadow:0 2px 16px var(--shadow);
+}
+.tbrand {
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px; font-weight:300; color:var(--white); white-space:nowrap;
+}
+.tbrand em { font-style:italic; color:var(--rose); }
+
+.wtabs {
+  display:flex; gap:4px; overflow-x:auto;
+  scrollbar-width:none; padding:0 8px;
+}
+.wtabs::-webkit-scrollbar { display:none; }
+.tab {
+  border:none; border-radius:20px; padding:6px 14px;
+  font-family:'Jost',sans-serif; font-size:13px;
+  white-space:nowrap; cursor:pointer; transition:all .18s;
+}
+.tab-lock { background:transparent; color:rgba(255,255,255,.2); border:1px solid rgba(255,255,255,.08); cursor:default; }
+.tab-open { background:rgba(255,255,255,.07); color:rgba(255,255,255,.6); border:1px solid rgba(255,255,255,.15); }
+.tab-open:hover { background:rgba(255,255,255,.15); color:var(--white); }
+.tab-act { background:var(--rose); color:var(--white); border:1px solid var(--rose); font-weight:500; }
+
+/* MOBILE TOGGLE */
+.mob-toggle {
+  display:none;
+  background:var(--navy-pale);
+  border-bottom:1px solid var(--border);
+  padding:0;
+}
+.mob-toggle-inner {
+  display:flex; max-width:100%;
+}
+.mtog-btn {
+  flex:1; padding:14px; border:none;
+  font-family:'Jost',sans-serif; font-size:15px;
+  font-weight:400; cursor:pointer; transition:all .2s;
+  background:transparent; color:var(--soft);
+  border-bottom:3px solid transparent;
+}
+.mtog-btn.active {
+  color:var(--navy); border-bottom:3px solid var(--rose);
+  font-weight:500;
+}
+
+@media(max-width:860px) {
+  .mob-toggle { display:block; }
+  .cgrid { display:block !important; padding:20px 16px; }
+  .mcol {
+    display:none; border-left:none !important;
+    padding-left:0 !important; position:static !important;
+    height:auto !important;
+  }
+  .mcol.mob-active { display:flex; }
+  .lcol { display:block; padding-right:0 !important; }
+  .lcol.mob-hidden { display:none; }
+}
+
+/* GRID */
+.cgrid {
+  display:grid; grid-template-columns:1fr 370px;
+  max-width:1180px; margin:0 auto;
+  padding:32px 24px; width:100%; gap:0;
+}
+
+/* LEFT */
+.lcol { padding-right:32px; }
+
+.wkhdr {
+  margin-bottom:26px; padding-bottom:22px;
+  border-bottom:1px solid var(--border);
+}
+.wkeye {
+  font-size:13px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--rose); margin-bottom:8px; font-weight:500;
+}
+.wkh {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(30px,4vw,44px); font-weight:300;
+  color:var(--navy); line-height:1.15; margin-bottom:6px;
+}
+.wkh em { font-style:italic; color:var(--rose); }
+.wks { font-size:15px; color:var(--soft); }
+
+.sph-badge {
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--navy); border-radius:8px;
+  padding:10px 16px; margin-bottom:22px;
+}
+.sphdot { width:8px; height:8px; border-radius:50%; background:var(--rose); flex-shrink:0; }
+.sphlbl { font-size:13px; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,.6); }
+.sphnm { font-family:'Cormorant Garamond',serif; font-size:17px; color:var(--white); font-style:italic; }
+
+/* INTENTION — fixed: white text on navy, fully visible */
+.intent {
+  background:var(--navy); border-radius:12px;
+  padding:28px 32px; margin-bottom:26px;
+  position:relative; overflow:hidden;
+}
+.intent::after {
+  content:'◈'; position:absolute; top:-16px; right:16px;
+  font-size:96px; color:rgba(211,94,111,.08); pointer-events:none;
+}
+.int-eye {
+  font-size:12px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--rose); margin-bottom:12px; font-weight:500;
+}
+.int-txt {
+  font-family:'Cormorant Garamond',serif;
+  font-size:21px; font-weight:300; font-style:italic;
+  color:var(--white); line-height:1.6;
+}
+
+.sec-lbl {
+  font-size:13px; letter-spacing:2px; text-transform:uppercase;
+  color:var(--soft); margin-bottom:14px; font-weight:500;
+}
+
+.pcard {
+  background:var(--white); border:1.5px solid var(--border);
+  border-radius:10px; padding:18px 22px; margin-bottom:10px;
+  cursor:pointer; transition:all .2s;
+  display:flex; align-items:flex-start; gap:14px;
+}
+.pcard:hover {
+  border-color:var(--rose); border-left:4px solid var(--rose);
+  padding-left:20px; box-shadow:0 4px 14px var(--shadow);
+}
+.pnum {
+  font-family:'Cormorant Garamond',serif; font-size:26px;
+  font-weight:300; color:var(--border); line-height:1;
+  width:28px; flex-shrink:0;
+}
+.pcard:hover .pnum { color:var(--rose); }
+.pq { font-size:16px; line-height:1.65; color:var(--navy); padding-top:2px; flex:1; }
+.parr { color:var(--rose); font-size:20px; padding-top:4px; flex-shrink:0; opacity:0; transition:opacity .15s,transform .15s; }
+.pcard:hover .parr { opacity:1; transform:translateX(3px); }
+
+.ciblock {
+  margin-top:30px; background:var(--navy-pale);
+  border:1px solid var(--border); border-radius:12px; padding:26px;
+}
+.cih { font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:300; color:var(--navy); margin-bottom:4px; }
+.cis { font-size:15px; color:var(--soft); margin-bottom:18px; }
+
+.scale-row { display:flex; gap:6px; margin-bottom:16px; }
+.sbtn {
+  flex:1; background:var(--white); border:1.5px solid var(--border);
+  border-radius:8px; padding:10px 4px;
+  font-family:'Jost',sans-serif; font-size:14px;
+  color:var(--soft); cursor:pointer; transition:all .18s; text-align:center; line-height:1.5;
+}
+.sbtn:hover { border-color:var(--navy); color:var(--navy); }
+.sbtn.pick { background:var(--navy); border-color:var(--navy); color:var(--white); }
+
+.cita {
+  width:100%; background:var(--white);
+  border:1.5px solid var(--border); border-radius:8px;
+  padding:14px 16px; font-family:'Jost',sans-serif;
+  font-size:16px; font-weight:300; color:var(--navy);
+  resize:vertical; min-height:90px; outline:none;
+  transition:border-color .2s; line-height:1.6; margin-bottom:12px;
+}
+.cita:focus { border-color:var(--rose); }
+
+/* RIGHT — MARIS */
+.mcol {
+  border-left:1px solid var(--border); padding-left:28px;
+  display:flex; flex-direction:column;
+  position:sticky; top:72px; height:calc(100vh - 90px);
+}
+
+.mhd {
+  display:flex; align-items:center; gap:12px;
+  padding-bottom:14px; border-bottom:1px solid var(--border); margin-bottom:13px;
+}
+.mav {
+  width:44px; height:44px; border-radius:50%;
+  background:linear-gradient(135deg,var(--rose),var(--rose-dark));
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Cormorant Garamond',serif; font-size:22px;
+  font-style:italic; color:var(--white); flex-shrink:0;
+  box-shadow:0 4px 14px rgba(211,94,111,.32);
+}
+.mname { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:400; color:var(--navy); }
+.mtag  { font-size:14px; color:var(--soft); }
+
+/* MAP BAR — fixed: visible text */
+.mbar {
+  background:var(--navy); border-radius:8px;
+  padding:12px 14px; margin-bottom:13px;
+}
+.mbar-lbl {
+  font-size:12px; letter-spacing:2px; text-transform:uppercase;
+  color:var(--rose); margin-bottom:5px; font-weight:500;
+}
+.mbar-txt { font-size:14px; color:rgba(255,255,255,.75); line-height:1.5; }
+
+.mchat {
+  flex:1; overflow-y:auto; display:flex;
+  flex-direction:column; gap:10px;
+  margin-bottom:13px; min-height:0;
+  scrollbar-width:thin; scrollbar-color:var(--border) transparent;
+}
+
+.bub { border-radius:12px; padding:14px 16px; font-size:16px; line-height:1.65; animation:fup .28s ease; }
+@keyframes fup { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+.bm { background:var(--white); border:1.5px solid var(--border); color:var(--navy); border-bottom-left-radius:4px; }
+.bm .bn { font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--rose); margin-bottom:6px; font-weight:500; }
+.bu { background:var(--navy); color:rgba(255,255,255,.9); border-bottom-right-radius:4px; align-self:flex-end; max-width:92%; font-size:15px; }
+
+.typ { display:flex; gap:4px; padding:14px 16px; background:var(--white); border:1.5px solid var(--border); border-radius:12px; border-bottom-left-radius:4px; width:fit-content; }
+.td { width:6px; height:6px; border-radius:50%; background:var(--rose); animation:tp 1.1s infinite; }
+.td:nth-child(2){animation-delay:.18s} .td:nth-child(3){animation-delay:.36s}
+@keyframes tp { 0%,60%,100%{opacity:.3;transform:translateY(0)} 30%{opacity:1;transform:translateY(-3px)} }
+
+.mwrap { flex-shrink:0; }
+.mta {
+  width:100%; background:var(--white); border:1.5px solid var(--border);
+  border-radius:8px; padding:13px 15px;
+  font-family:'Jost',sans-serif; font-size:16px; font-weight:300;
+  color:var(--navy); resize:none; height:80px; outline:none;
+  transition:border-color .2s; line-height:1.5; margin-bottom:8px;
+}
+.mta:focus { border-color:var(--rose); }
+
+.mfoot { display:flex; justify-content:space-between; align-items:flex-end; }
+.uwrap { font-size:13px; color:var(--soft); }
+.ubar { width:64px; height:3px; background:var(--border); border-radius:2px; margin-top:4px; overflow:hidden; }
+.uf   { height:100%; background:var(--navy-lite); border-radius:2px; transition:width .35s; }
+.msend {
+  background:var(--navy); color:var(--white); border:none;
+  border-radius:8px; padding:11px 22px;
+  font-family:'Jost',sans-serif; font-size:14px;
+  letter-spacing:1.5px; text-transform:uppercase;
+  cursor:pointer; transition:all .2s;
+}
+.msend:hover { background:var(--rose); }
+</style>
+</head>
+<body>
+
+<!-- ══ INTAKE ══ -->
+<div id="screen-intake" class="screen active">
+  <div class="hero">
+    <div class="brand-eye">Wellness Wakeup Whitefish</div>
+    <h1 class="hero-h">Heal Your <em>Heart</em><br>8-Week Method</h1>
+    <p class="hero-s">Your guided path through the Venus Sequence with Maris</p>
+  </div>
+  <div class="intake-body">
+    <div class="fg">
+      <label class="fl">Your Name</label>
+      <input type="text" class="fi" id="i-name" placeholder="What would you like Maris to call you?" />
+    </div>
+    <div class="fg">
+      <label class="fl">Your Venus Sequence</label>
+      <textarea class="fi fta" id="i-seq" placeholder="Paste your full Venus Sequence here — Gate and Line for each sphere.
+
+Example:
+Purpose: Gate 10, Line 3
+Attraction: Gate 14, Line 5
+IQ: Gate 11, Line 2
+EQ: Gate 36, Line 4
+SQ: Gate 46, Line 1
+Core Wound: Gate 25, Line 6"></textarea>
+      <p class="fh">Your chart is private and held by Maris throughout all 8 weeks.</p>
+    </div>
+    <div class="fg">
+      <label class="fl">Which week are you starting?</label>
+      <div class="wk-grid" id="wk-grid">
+        <button class="wp sel" data-w="1" onclick="pickWeek(1)"><span class="wn">1</span>Intro</button>
+        <button class="wp" data-w="2" onclick="pickWeek(2)"><span class="wn">2</span>Purpose</button>
+        <button class="wp" data-w="3" onclick="pickWeek(3)"><span class="wn">3</span>Attract</button>
+        <button class="wp" data-w="4" onclick="pickWeek(4)"><span class="wn">4</span>IQ</button>
+        <button class="wp" data-w="5" onclick="pickWeek(5)"><span class="wn">5</span>EQ</button>
+        <button class="wp" data-w="6" onclick="pickWeek(6)"><span class="wn">6</span>SQ</button>
+        <button class="wp" data-w="7" onclick="pickWeek(7)"><span class="wn">7</span>Core</button>
+        <button class="wp" data-w="8" onclick="pickWeek(8)"><span class="wn">8</span>Integrate</button>
+      </div>
+      <p class="fh">Weeks unlock in sequence. Select your current week if rejoining.</p>
+    </div>
+    <button class="btn-main" onclick="startCourse()">Begin My Journey →</button>
+  </div>
+</div>
+
+<!-- ══ COURSE ══ -->
+<div id="screen-course" class="screen">
+  <div class="topbar">
+    <div class="tbrand">Heal Your <em>Heart</em></div>
+    <div class="wtabs" id="wtabs"></div>
+  </div>
+
+  <!-- Mobile toggle -->
+  <div class="mob-toggle">
+    <div class="mob-toggle-inner">
+      <button class="mtog-btn active" id="tog-content" onclick="mobShow('content')">This Week</button>
+      <button class="mtog-btn" id="tog-maris" onclick="mobShow('maris')">Maris</button>
+    </div>
+  </div>
+
+  <div class="cgrid">
+    <!-- LEFT -->
+    <div class="lcol" id="mob-content">
+      <div class="wkhdr">
+        <div class="wkeye" id="c-eye"></div>
+        <h2 class="wkh" id="c-ttl"></h2>
+        <div class="wks" id="c-sub"></div>
+      </div>
+      <div id="c-badge"></div>
+      <div class="intent">
+        <div class="int-eye">This Week's Intention</div>
+        <div class="int-txt" id="c-int"></div>
+      </div>
+      <div class="sec-lbl">Reflection Portals — click to open with Maris</div>
+      <div id="c-prompts"></div>
+      <div class="ciblock">
+        <div class="cih">Weekly Check-In</div>
+        <div class="cis">How are you moving through this week's work?</div>
+        <div class="scale-row">
+          <button class="sbtn" data-v="1" onclick="pickScale(1)">1<br><span style="font-size:12px">Heavy</span></button>
+          <button class="sbtn" data-v="2" onclick="pickScale(2)">2<br><span style="font-size:12px">Tender</span></button>
+          <button class="sbtn" data-v="3" onclick="pickScale(3)">3<br><span style="font-size:12px">Moving</span></button>
+          <button class="sbtn" data-v="4" onclick="pickScale(4)">4<br><span style="font-size:12px">Open</span></button>
+          <button class="sbtn" data-v="5" onclick="pickScale(5)">5<br><span style="font-size:12px">Clear</span></button>
+        </div>
+        <textarea class="cita" id="ci-note" placeholder="What's coming up this week? What feels stuck, tender, or alive?"></textarea>
+        <button class="btn-main" style="padding:15px;" onclick="doCheckin()">Send Check-In to Maris →</button>
+      </div>
+    </div>
+
+    <!-- RIGHT: MARIS -->
+    <div class="mcol" id="mob-maris">
+      <div class="mhd">
+        <div class="mav">M</div>
+        <div>
+          <div class="mname">Maris</div>
+          <div class="mtag">Your inner healing companion</div>
+        </div>
+      </div>
+      <div class="mbar">
+        <div class="mbar-lbl">Holding Your Map</div>
+        <div class="mbar-txt" id="map-prev">Your Venus Sequence is loaded.</div>
+      </div>
+      <div class="mchat" id="mchat">
+        <div class="bub bm">
+          <div class="bn">Maris</div>
+          <span id="m-wel">Welcome. I'm here when you're ready.</span>
+        </div>
+      </div>
+      <div class="mwrap">
+        <textarea class="mta" id="m-inp"
+          placeholder="Ask Maris anything about this week, your chart, or what you're feeling…"
+          onkeydown="kcheck(event)"></textarea>
+        <div class="mfoot">
+          <div class="uwrap">
+            <span id="utxt">0 of 12 exchanges this week</span>
+            <div class="ubar"><div class="uf" id="uf" style="width:0%"></div></div>
+          </div>
+          <button class="msend" onclick="sendMaris()">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const S={name:'',seq:'',week:1,unlocked:1,scale:null,msgs:0,max:12,hist:[]};
+
+const WK={
+  1:{eye:'Week One',ttl:'Open to <em>Receiving</em>',sub:'Introduction · Setting the Container · Clearing to Begin',sphere:null,
+    int:'Before anything can heal, it must first be welcomed. This week we practice the radical act of letting something in — softening the places that have been braced for so long.',
+    prompts:['What does "receiving" actually feel like in my body right now — and where do I notice resistance to it?','When did I first learn that it wasn\'t safe to need things from others?','What would it mean to let this process be easy — and what part of me doesn\'t trust that?','If my heart could speak to me right now, what would it most want me to know?']},
+  2:{eye:'Week Two',ttl:'Your Relational <em>Purpose</em>',sub:'Unconscious Earth · Purpose Sphere · The Pattern That Surfaces With Intimacy',sphere:'Sphere 1 — Purpose',
+    sphereDesc:'The relational role you unconsciously play. The recurring emotional tension in partnerships. The pattern that surfaces once intimacy deepens.',
+    int:'Your relationships are not random. They are perfectly designed for your evolution. This week, we find the gift hiding inside the pattern you keep repeating.',
+    prompts:['What role do I tend to play in close relationships — and when did I learn to play it?','How does my Purpose Shadow show up once someone truly starts to know me?','What am I protecting when I fall into my relational pattern — and is that protection still serving me?','What would it look like to bring my Purpose Gift into my closest relationship this week?']},
+  3:{eye:'Week Three',ttl:'The <em>Attraction</em> Field',sub:'Unconscious Moon · Attraction Sphere · Chemistry, Desire, and Unconscious Magnetism',sphere:'Sphere 2 — Attraction',
+    sphereDesc:'Governs chemistry, sexuality, desire patterns, and unconscious magnetism. Shows what you are drawn to, what triggers you, and the lessons hidden inside relational attraction.',
+    int:'We don\'t attract what we want. We attract what we are. This week, we get honest about what we\'ve been broadcasting — and what it\'s calling in.',
+    prompts:['What patterns in the people I\'ve been drawn to reveal something about my shadow?','Where am I confusing desire with longing — and longing with old unmet needs?','What does my Attraction Sphere tell me about the unconscious lessons in my relationship history?','What would I need to release in order to call in a genuinely different kind of connection?']},
+  4:{eye:'Week Four',ttl:'The <em>Thinking</em> Heart',sub:'Conscious Venus · IQ Sphere · Ages 14–21 · The Stories We Built About Ourselves',sphere:'Sphere 3 — IQ',
+    sphereDesc:'The mental story you built about yourself during your teenage years. How your mind protects you in relationships.',
+    int:'The mind isn\'t the enemy of the heart. It\'s the narrator. This week, we examine the stories we\'ve been living inside — and choose which ones still serve us.',
+    prompts:['What belief about myself — formed in my teenage years — am I still making decisions from today?','When I feel emotionally uncomfortable in a relationship, what does my mind do first?','How does my IQ Shadow show up in the way I communicate — or avoid communicating?','What would I think differently if I truly believed I was worthy of love, right now, as I am?']},
+  5:{eye:'Week Five',ttl:'Emotional <em>Intelligence</em>',sub:'Conscious Mars · EQ Sphere · Ages 8–14 · How You Learned to Handle Feelings',sphere:'Sphere 4 — EQ',
+    sphereDesc:'How you learned to handle feelings when you were young. How you react when hurt. EQ is where relationship patterns either repeat or evolve.',
+    int:'Emotions aren\'t problems to solve. They\'re information to trust. This week, we learn the language of what we feel — and stop making someone else wrong for it.',
+    prompts:['What did I learn about expressing emotions between ages 8 and 14 — what was safe, what was punished?','How do I behave when I feel hurt — do I go inward, outward, or sideways?','What is the emotional pattern I keep repeating in relationships — and what need is it protecting?','What does my EQ Gift look like when it\'s working — and when did I last feel it clearly?']},
+  6:{eye:'Week Six',ttl:'Spiritual <em>Foundations</em>',sub:'Unconscious Venus · SQ Sphere · Ages 0–7 · Your Earliest Emotional Atmosphere',sphere:'Sphere 5 — SQ',
+    sphereDesc:'Your earliest emotional atmosphere. How safe it felt to simply exist. Your baseline emotional state — formed before logic, before identity.',
+    int:'Before words, before logic, before story — there was atmosphere. This week we return to the feeling of home, and learn to carry that safety inside ourselves.',
+    prompts:['What was the emotional atmosphere of my earliest years — what did I absorb before I had words for it?','How does my SQ Shadow show up in what I unconsciously seek — or fear — in relationships today?','Where in my life do I most long for a sense of belonging or spiritual home right now?','What would it mean to become my own source of safety — not as a concept, but as a felt experience?']},
+  7:{eye:'Week Seven',ttl:'The <em>Core Wound</em>',sub:'Unconscious Mars · Core Wound Sphere · Your Deepest Emotional Imprint',sphere:'Sphere 6 — Core Wound',
+    sphereDesc:'Your deepest emotional imprint. Where you feel most sensitive. The pattern that quietly shapes all your relationships. Your Core Wound holds your highest relational potential.',
+    int:'The wound isn\'t a flaw. It\'s a doorway. This week we turn toward it — gently, with both hands open — because this is where your greatest capacity for intimacy lives.',
+    prompts:['What is the core story I\'ve been telling myself about why I am unlovable or not enough?','How does my Core Wound activate in my closest relationships — what does it look like in real moments?','When I feel most triggered by someone I love, what old wound is actually speaking?','What would it feel like to stop protecting myself from the very thing I most need?']},
+  8:{eye:'Week Eight',ttl:'<em>Integration</em> and Forward',sub:'The Whole Map · Living the Sequence · Becoming the Gift',sphere:null,
+    int:'This isn\'t the end of healing. It\'s the beginning of living differently. This week, we weave everything together and ask: who am I becoming as I walk this path?',
+    prompts:['Looking at my entire Venus Sequence — where have I grown the most, and where is the work still calling me?','What is one concrete way I will choose differently in relationships, starting now?','What does "healed" actually feel like — not as a destination, but as a daily practice?','What would I want to say to someone just beginning this journey — what do I now know that I didn\'t before?']}
+};
+
+const VSK=`VENUS SEQUENCE FULL REFERENCE FOR MARIS
+
+SPHERE 1 — PURPOSE (Unconscious Earth)
+Line 1 Anchor/Loner — Shadow: doesn't stand up for self, swallows feelings, forces POV to regain control. Gift: calm firm self-advocacy, listens deeply, grounded confidence makes others feel safe.
+Line 2 Natural/Accuser — Shadow: avoids conflict, sudden angry outbursts, unaware of emotional impact. Gift: spontaneous and real, peaceful presence, others relax in authenticity.
+Line 3 Adventurer/Escape Artist — Shadow: diverts from own feelings, creates drama, fears commitment. Gift: laughs at self, accepts others' emotions, contagious enthusiasm.
+Line 4 Politician/Nurturer — Shadow: emotional numbness, cuts others off first. Gift: gentle self-acceptance, deep emotional bonding, generosity allows others to accept themselves.
+Line 5 Victim/Leader — Shadow: self-pity, projects blame, trapped in distorted thinking. Gift: sees clearly, brings clarity to others, grounded emotional leadership.
+Line 6 Judge/Visionary — Shadow: aloof, uses intellect to disempower, excludes self through judgment. Gift: includes self at every level, role model for trust, trust in life restores trust in others.
+
+SPHERE 2 — ATTRACTION (Unconscious Moon)
+Line 1 Sterility/Fertility — Shadow: empty/overstimulated, all-or-nothing, lack vs abundance cycles. Gift: creative life force, sees whole picture, attracts aligned experiences.
+Line 2 Lust/Passion — Shadow: desire tangled with inadequacy, pleasure/pain loops. Gift: liberated desire from open heart, expression without fear.
+Line 3 Promiscuity/Playfulness — Shadow: blocked heart as complexity, dramatic relationships. Gift: light-hearted exploration, nurturing heart back into openness.
+Line 4 Frigidity/Romance — Shadow: emotionally unavailable, everyday tasks repress joy. Gift: gentle warm intimacy, expresses love verbally and physically.
+Line 5 Entrapment/Sensuality — Shadow: people-pleasing, low self-worth through control. Gift: crystal-clear boundaries, healthy embodied sexuality.
+Line 6 Disappointment/Innocence — Shadow: deep disappointment, believes love is unrealistic. Gift: ecstatic trust, present with what is.
+
+SPHERE 3 — IQ (Conscious Venus, Ages 14–21)
+Line 1 Contemplative Mind — Shadow: turns emotions inward, hides them. Gift: deep insight from reflection.
+Line 2 Brilliant Mind — Shadow: anger/resentment surface quickly, rebellious, most likely to be unjustly punished. Gift: quantum leaps in perception.
+Line 3 Flexible Mind — Shadow: avoids conversations by shifting topic. Gift: thinks on feet, balances boundaries with creative understanding.
+Line 4 Influential Mind — Shadow: hyper-focused one viewpoint, unwilling to bend. Gift: warm heart-led communication. Key: bypass mind, work with emotional or physical body directly.
+Line 5 Practical Mind — Shadow: undermines self, self-pity, convinced others are against them. Gift: organizes complex info for everyone, empowered through self-awareness.
+Line 6 Objective Mind — Shadow: appears disconnected, physical freezing. Gift: true objectivity without agenda.
+
+SPHERE 4 — EQ (Conscious Mars, Ages 8–14)
+Line 1 Self-Esteem/Self-Sabotage — Shadow: quietly undermines self, doubles down on destructive patterns. Gift: confidence with humility, self-worth as internal state.
+Line 2 Courtesy/Aggression — Shadow: attacks first as defense, blame as protection. Gift: passion with consideration, true power makes others feel good.
+Line 3 Sympathy/Apathy — Shadow: shuts down emotionally, appears disengaged. Gift: makes others feel emotionally safe, understands full emotional spectrum.
+Line 4 Kindness/Meanness — Shadow: internal resentment, fear of rejection. Gift: small consistent acts of generosity, kindness from internal security.
+Line 5 Respect/Disrespect — Shadow: overextension, power struggles. Gift: emotional maturity felt by others, owns leadership without overpowering.
+Line 6 Reverence/Alienation — Shadow: withdraws, feels fundamentally separate. Gift: honors long journey, powerful inner resilience.
+
+SPHERE 5 — SQ (Unconscious Venus, Ages 0–7)
+Line 1 Certainty/Rhythm & Routine — Shadow: clings to routine, rigid with unpredictability. Gift: finds rhythm inside self, relaxes into life's cycles.
+Line 2 Freedom/Wildness & Boundaries — Shadow: collapses or overcorrects boundaries. Gift: true freedom as inner state. THIS IS WHERE CLIENT FEELS MOST FREE.
+Line 3 Pleasure/Adventure — Shadow: uses stimulation to avoid feeling. Gift: experiences joy without escape, sees life as exploration.
+Line 4 Belonging/Kinship — Shadow: over-adapts, withdraws before rejection. Gift: feels connected without performing. THIS REVEALS NETWORKING GIFTS.
+Line 5 Mentoring/Role Models — Shadow: doubts impact, overcompensates. Gift: influences through example, radiates grounded wisdom.
+Line 6 Patience/Time & Space — Shadow: feels misunderstood, resists being rushed. Gift: trusts timing, stops forcing growth.
+
+SPHERE 6 — CORE WOUND (Unconscious Mars)
+Line 1 Repression/Honesty — Shadow: internalizes pain, fears honesty disrupts connection. Gift: deep self-honesty first, speaks truth without collapse.
+Line 2 Denial/Ease — Shadow: numbs overwhelming emotion, minimizes pain. Gift: allows healing to be simple, stops forcing growth.
+Line 3 Shame/Humor — Shadow: feels inadequate, compensates through performance. Gift: compassionate self-awareness, shows up real instead of impressive.
+Line 4 Rejection/Gentleness — Shadow: guards heart, rejects others first. Gift: softens toward self first, stays open even when vulnerable.
+Line 5 Guilt/Forgiveness — Shadow: carries responsibility for everyone's emotional state. Gift: releases emotional debt, stops carrying what isn't theirs.
+Line 6 Separation/Care — Shadow: feels alone even when surrounded, withdraws. Gift: self-tending, caring for self stabilizes relationships.`;
+
+// ── INTAKE ──
+function pickWeek(n){
+  S.week=n;
+  document.querySelectorAll('.wp').forEach(b=>b.classList.remove('sel'));
+  document.querySelector('[data-w="'+n+'"]').classList.add('sel');
+}
+
+function startCourse(){
+  const name=document.getElementById('i-name').value.trim();
+  const seq=document.getElementById('i-seq').value.trim();
+  if(!name){alert('Please enter your name.');return;}
+  if(!seq){alert('Please paste your Venus Sequence.');return;}
+  S.name=name; S.seq=seq; S.unlocked=S.week;
+  try{
+    const sv=JSON.parse(localStorage.getItem('hyh_'+name)||'{}');
+    if(sv.msgs)S.msgs=sv.msgs;
+    if(sv.hist)S.hist=sv.hist;
+    if(sv.unlocked&&sv.unlocked>=S.unlocked)S.unlocked=sv.unlocked;
+  }catch(e){}
+  document.getElementById('screen-intake').classList.remove('active');
+  document.getElementById('screen-course').classList.add('active');
+  buildTabs(); loadWeek(S.week); updateMap();
+}
+
+// ── MOBILE TOGGLE ──
+function mobShow(which){
+  const lc=document.getElementById('mob-content');
+  const mc=document.getElementById('mob-maris');
+  const tc=document.getElementById('tog-content');
+  const tm=document.getElementById('tog-maris');
+  if(which==='content'){
+    lc.classList.remove('mob-hidden'); mc.classList.remove('mob-active');
+    tc.classList.add('active'); tm.classList.remove('active');
+  } else {
+    lc.classList.add('mob-hidden'); mc.classList.add('mob-active');
+    tm.classList.add('active'); tc.classList.remove('active');
+  }
+}
+
+// ── TABS ──
+const TLBL=['Intro','Purpose','Attract','IQ','EQ','SQ','Core','Integrate'];
+function buildTabs(){
+  const el=document.getElementById('wtabs'); el.innerHTML='';
+  for(let i=1;i<=8;i++){
+    const b=document.createElement('button');
+    b.textContent='W'+i+' '+TLBL[i-1]; b.dataset.w=i; b.className='tab';
+    if(i<=S.unlocked){b.classList.add('tab-open');b.onclick=()=>loadWeek(i);}
+    else b.classList.add('tab-lock');
+    if(i===S.week){b.classList.remove('tab-open');b.classList.add('tab-act');}
+    el.appendChild(b);
+  }
+}
+
+function loadWeek(n){
+  S.week=n;
+  const w=WK[n];
+  document.getElementById('c-eye').textContent=w.eye;
+  document.getElementById('c-ttl').innerHTML=w.ttl;
+  document.getElementById('c-sub').textContent=w.sub;
+  document.getElementById('c-int').textContent=w.int;
+  const badge=document.getElementById('c-badge');
+  badge.innerHTML=w.sphere?'<div class="sph-badge"><div class="sphdot"></div><span class="sphlbl">This Week</span><span class="sphnm">'+w.sphere+'</span></div>':'';
+  const pc=document.getElementById('c-prompts'); pc.innerHTML='';
+  w.prompts.forEach(function(p,i){
+    const d=document.createElement('div'); d.className='pcard';
+    d.innerHTML='<div class="pnum">'+(i+1)+'</div><div class="pq">'+p+'</div><div class="parr">→</div>';
+    d.onclick=function(){preload(p);};
+    pc.appendChild(d);
+  });
+  buildTabs(); renderHist(); updateUsage();
+  document.getElementById('m-wel').textContent='Welcome'+(S.name?', '+S.name:'')+'. We\'re in '+w.eye+(w.sphere?' — '+w.sphere:'')+'. Click a reflection below, or tell me what\'s present for you right now.';
+}
+
+function updateMap(){
+  const lines=S.seq.split('\n').filter(function(l){return l.trim();}).slice(0,4);
+  document.getElementById('map-prev').textContent=(S.name?S.name+"'s chart loaded. ":'')+lines.join(' · ').substring(0,90)+'…';
+}
+
+// ── CHECK-IN ──
+function pickScale(v){
+  S.scale=v;
+  document.querySelectorAll('.sbtn').forEach(function(b){b.classList.toggle('pick',parseInt(b.dataset.v)===v);});
+}
+function doCheckin(){
+  const note=document.getElementById('ci-note').value.trim();
+  if(!S.scale){alert('Please select how you\'re feeling this week.');return;}
+  const lb={1:'Heavy',2:'Tender',3:'Moving',4:'Open',5:'Clear'};
+  const msg='Weekly Check-In — Feeling: '+lb[S.scale]+' ('+S.scale+'/5)\n\n'+(note||'No additional notes.');
+  document.getElementById('ci-note').value=''; S.scale=null;
+  document.querySelectorAll('.sbtn').forEach(function(b){b.classList.remove('pick');});
+  dispatch(msg,true);
+}
+
+// ── MARIS ──
+function preload(p){
+  document.getElementById('m-inp').value=p;
+  document.getElementById('m-inp').focus();
+  if(window.innerWidth<=860) mobShow('maris');
+}
+function kcheck(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMaris();}}
+function sendMaris(){
+  const inp=document.getElementById('m-inp');
+  const msg=inp.value.trim(); if(!msg)return;
+  inp.value=''; dispatch(msg,false);
+}
+
+async function dispatch(userMsg,isCI){
+  if(S.msgs>=S.max){
+    addBub('m',S.name+', you\'ve reached your reflection limit for this week — which means you\'ve been doing the work. Let what\'s emerged settle.');
+    return;
+  }
+  addBub('u',userMsg); S.msgs++; updateUsage();
+  const typ=showTyp();
+  const w=WK[S.week];
+  const GKK=`GENE KEYS — ALL 64 GATES — SHADOW / GIFT / SIDDHI
+
+Gate 1: Shadow=Entropy, Gift=Freshness, Siddhi=Beauty
+Gate 2: Shadow=Dislocation, Gift=Orientation, Siddhi=Unity
+Gate 3: Shadow=Chaos, Gift=Innovation, Siddhi=Innocence
+Gate 4: Shadow=Intolerance, Gift=Understanding, Siddhi=Forgiveness
+Gate 5: Shadow=Impatience, Gift=Patience, Siddhi=Timelessness
+Gate 6: Shadow=Conflict, Gift=Diplomacy, Siddhi=Peace
+Gate 7: Shadow=Division, Gift=Guidance, Siddhi=Virtue
+Gate 8: Shadow=Mediocrity, Gift=Style, Siddhi=Exquisiteness
+Gate 9: Shadow=Inertia, Gift=Determination, Siddhi=Invincibility
+Gate 10: Shadow=Self-Obsession, Gift=Naturalness, Siddhi=Being
+Gate 11: Shadow=Obscurity, Gift=Idealism, Siddhi=Light
+Gate 12: Shadow=Vanity, Gift=Discrimination, Siddhi=Purity
+Gate 13: Shadow=Discord, Gift=Discernment, Siddhi=Empathy
+Gate 14: Shadow=Compromise, Gift=Competence, Siddhi=Bounteousness
+Gate 15: Shadow=Dullness, Gift=Magnetism, Siddhi=Fluorescence
+Gate 16: Shadow=Indifference, Gift=Versatility, Siddhi=Mastery
+Gate 17: Shadow=Opinion, Gift=Insight, Siddhi=Omniscience
+Gate 18: Shadow=Judgment, Gift=Integrity, Siddhi=Perfection
+Gate 19: Shadow=Co-dependence, Gift=Sensitivity, Siddhi=Sacrifice
+Gate 20: Shadow=Superficiality, Gift=Self-Assurance, Siddhi=Presence
+Gate 21: Shadow=Control, Gift=Authority, Siddhi=Valor
+Gate 22: Shadow=Dishonor, Gift=Graciousness, Siddhi=Grace
+Gate 23: Shadow=Complexity, Gift=Simplicity, Siddhi=Quintessence
+Gate 24: Shadow=Addiction, Gift=Invention, Siddhi=Silence
+Gate 25: Shadow=Constriction, Gift=Acceptance, Siddhi=Universal Love
+Gate 26: Shadow=Pride, Gift=Artfulness, Siddhi=Invisibility
+Gate 27: Shadow=Selfishness, Gift=Altruism, Siddhi=Selflessness
+Gate 28: Shadow=Purposelessness, Gift=Totality, Siddhi=Immortality
+Gate 29: Shadow=Half-Heartedness, Gift=Commitment, Siddhi=Devotion
+Gate 30: Shadow=Desire, Gift=Lightness, Siddhi=Rapture
+Gate 31: Shadow=Arrogance, Gift=Leadership, Siddhi=Humility
+Gate 32: Shadow=Failure, Gift=Preservation, Siddhi=Veneration
+Gate 33: Shadow=Forgetting, Gift=Mindfulness, Siddhi=Revelation
+Gate 34: Shadow=Force, Gift=Strength, Siddhi=Majesty
+Gate 35: Shadow=Hunger, Gift=Adventure, Siddhi=Boundlessness
+Gate 36: Shadow=Turbulence, Gift=Humanity, Siddhi=Compassion
+Gate 37: Shadow=Weakness, Gift=Equality, Siddhi=Tenderness
+Gate 38: Shadow=Struggle, Gift=Perseverance, Siddhi=Honor
+Gate 39: Shadow=Provocation, Gift=Dynamism, Siddhi=Liberation
+Gate 40: Shadow=Exhaustion, Gift=Resolve, Siddhi=Divine Will
+Gate 41: Shadow=Fantasy, Gift=Anticipation, Siddhi=Emanation
+Gate 42: Shadow=Expectation, Gift=Detachment, Siddhi=Celebration
+Gate 43: Shadow=Deafness, Gift=Insight, Siddhi=Epiphany
+Gate 44: Shadow=Interference, Gift=Teamwork, Siddhi=Synarchy
+Gate 45: Shadow=Dominance, Gift=Synergy, Siddhi=Communion
+Gate 46: Shadow=Seriousness, Gift=Delight, Siddhi=Ecstasy
+Gate 47: Shadow=Oppression, Gift=Transmutation, Siddhi=Transfiguration
+Gate 48: Shadow=Inadequacy, Gift=Resourcefulness, Siddhi=Wisdom
+Gate 49: Shadow=Reaction, Gift=Revolution, Siddhi=Redemption
+Gate 50: Shadow=Corruption, Gift=Equilibrium, Siddhi=Harmony
+Gate 51: Shadow=Agitation, Gift=Initiative, Siddhi=Awakening
+Gate 52: Shadow=Stress, Gift=Restraint, Siddhi=Stillness
+Gate 53: Shadow=Immaturity, Gift=Expansion, Siddhi=Superabundance
+Gate 54: Shadow=Greed, Gift=Aspiration, Siddhi=Ascension
+Gate 55: Shadow=Victimization, Gift=Freedom, Siddhi=Freedom
+Gate 56: Shadow=Distraction, Gift=Enrichment, Siddhi=Intoxication
+Gate 57: Shadow=Unease, Gift=Intuition, Siddhi=Clarity
+Gate 58: Shadow=Dissatisfaction, Gift=Vitality, Siddhi=Bliss
+Gate 59: Shadow=Dishonesty, Gift=Intimacy, Siddhi=Transparency
+Gate 60: Shadow=Limitation, Gift=Realism, Siddhi=Justice
+Gate 61: Shadow=Psychosis, Gift=Inspiration, Siddhi=Sanctity
+Gate 62: Shadow=Intellect, Gift=Precision, Siddhi=Impeccability
+Gate 63: Shadow=Doubt, Gift=Inquiry, Siddhi=Truth
+Gate 64: Shadow=Confusion, Gift=Imagination, Siddhi=Illumination
+
+GATE DESCRIPTIONS (key emotional themes for Maris):
+Gate 19: Feels everything — needs, emotions, unspoken atmospheres. Shadow=merging with others' needs, blurred boundaries, over-giving to maintain harmony. Gift=attuned sensitivity, responds to what's needed with care and steady heart.
+Gate 22: Emotional refinement, meets life with softness even when inner world is turbulent. Shadow=shrinks, apologizes for feelings, masks emotional truth to avoid discomfort. Gift=vulnerability without collapsing, responds instead of reacts, openness as stabilizing force.
+Gate 46: Wisdom of embodiment, trusts body and timing. Shadow=moves through life with pressure/tension instead of ease, braces against experience. Gift=finds pleasure in movement and everyday moments, follows what feels good with clarity.
+Gate 62: Organizes information, turns details into clarity. Shadow=mind fixates on accuracy, gets lost in details. Gift=articulates ideas clearly and simply, translates complexity into accessible understanding.
+Gate 54: Drives upward movement, inner evolution and ambition. Shadow=desire tightens around outcomes, chases goals for security or validation. Gift=pursues goals with integrity, devotion and emotional clarity.
+Gate 6: Governs emotional truth and energetic boundary between self and others. Shadow=emotions feel charged or overwhelming, reacts quickly or pulls away. Gift=natural translator of feeling, expresses truth without sharpness, stays connected when emotions run high.
+`;
+const sys='You are Maris, the inner healing companion inside the "Heal Your Heart" 8-week course by Wellness Wakeup Whitefish. Your name means "to look within."\n\nVoice: warm, direct, grounded, spiritually intelligent. Speak like a wise friend who sees clearly — not a therapist, not a chatbot. No toxic positivity. No hollow affirmations. No bullet points or lists.\n\nSTUDENT: '+S.name+'\nCURRENT WEEK: '+w.eye+' — '+w.ttl.replace(/<[^>]+>/g,'')+'\nSPHERE: '+(w.sphere||'Integration — whole map')+'\nWEEK INTENTION: '+w.int+'\n'+(w.sphere?'SPHERE CONTEXT: '+(w.sphereDesc||'')+'\n':'')+'\nSTUDENT\'S VENUS SEQUENCE:\n'+S.seq+'\n\nVENUS SEQUENCE KNOWLEDGE:\n'+VSK+'\n\nGENE KEYS GATE REFERENCE (Shadow/Gift/Siddhi for all 64 Gates):\n'+GKK+'\n\nRESPOND: 100–200 words max. Reference student\'s specific Gate and Line naturally when relevant. ONE deepening question at end when appropriate. Speak to the heart.'+(isCI?'\nThis is a weekly check-in: acknowledge where they are emotionally first, reflect back what you hear, then offer one insight or question.':'');
+  const msgs=S.hist.slice(-8).concat([{role:'user',content:userMsg}]);
+  try{
+    const res=await fetch('/.netlify/functions/claude',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys,messages:msgs})
+    });
+    const data=await res.json(); typ.remove();
+    if(data.content&&data.content[0]&&data.content[0].text){
+      const r=data.content[0].text;
+      addBub('m',r);
+      S.hist.push({role:'user',content:userMsg});
+      S.hist.push({role:'assistant',content:r});
+      if(S.hist.length>24)S.hist=S.hist.slice(-24);
+      save();
+    } else {
+      addBub('m','Something shifted in the connection. Take a breath and try again in a moment.');
+    }
+  }catch(err){
+    typ.remove();
+    addBub('m','I\'m having trouble connecting right now. Take a breath — try again in a moment.');
+  }
+}
+
+// ── CHAT UI ──
+function addBub(who,text){
+  const c=document.getElementById('mchat');
+  const d=document.createElement('div');
+  d.className=who==='m'?'bub bm':'bub bu';
+  d.innerHTML=who==='m'?'<div class="bn">Maris</div>'+text:text;
+  c.appendChild(d); c.scrollTop=c.scrollHeight; return d;
+}
+function showTyp(){
+  const c=document.getElementById('mchat');
+  const d=document.createElement('div'); d.className='typ';
+  d.innerHTML='<div class="td"></div><div class="td"></div><div class="td"></div>';
+  c.appendChild(d); c.scrollTop=c.scrollHeight; return d;
+}
+function renderHist(){
+  const c=document.getElementById('mchat');
+  c.innerHTML='<div class="bub bm"><div class="bn">Maris</div><span id="m-wel">Welcome. I\'m here when you\'re ready.</span></div>';
+  S.hist.slice(-8).forEach(function(m){addBub(m.role==='user'?'u':'m',m.content);});
+}
+function updateUsage(){
+  const pct=Math.min((S.msgs/S.max)*100,100);
+  document.getElementById('uf').style.width=pct+'%';
+  document.getElementById('utxt').textContent=S.msgs+' of '+S.max+' exchanges this week';
+  document.getElementById('uf').style.background=pct>80?'var(--rose)':pct>55?'#7a9bbf':'var(--navy-lite)';
+}
+function save(){
+  try{localStorage.setItem('hyh_'+S.name,JSON.stringify({msgs:S.msgs,hist:S.hist,unlocked:S.unlocked}));}catch(e){}
+}
+</script>
+</body>
+</html>
